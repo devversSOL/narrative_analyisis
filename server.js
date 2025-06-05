@@ -1,4 +1,15 @@
 const WebSocket = require('ws');
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+  res.send('Narrative Analysis WebSocket client is running.');
+});
+
+app.listen(PORT, () => {
+  console.log(`HTTP server listening on port ${PORT}`);
+});
 
 const socket = new WebSocket("wss://lore-api.onrender.com/");
 
