@@ -9,16 +9,16 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`HTTP server listening on port ${PORT}`);
-});
 
-const socket = new WebSocket("wss://lore-api.onrender.com/");
+  // Only open the WebSocket after HTTP server is ready
+  const socket = new WebSocket("wss://lore-api.onrender.com/");
 
-socket.on("open", () => {
-  console.log("✅ Connected to Lore API WebSocket");
-});
+  socket.on("open", () => {
+    console.log("✅ Connected to Lore API WebSocket");
+  });
 
-socket.on("message", (raw) => {
-  const data = JSON.parse(raw);
+  socket.on("message", (raw) => {
+    const data = JSON.parse(raw);
   if (data.type === "token_update") {
     const token = data.data;
 
@@ -60,12 +60,13 @@ socket.on("message", (raw) => {
 
     console.log("📦 Token Extracted Data:\n", extracted);
   }
-});
+  });
 
-socket.on("close", () => {
-  console.log("❌ Disconnected from Lore API");
-});
+  socket.on("close", () => {
+    console.log("❌ Disconnected from Lore API");
+  });
 
-socket.on("error", (err) => {
-  console.error("WebSocket error:", err.message);
+  socket.on("error", (err) => {
+    console.error("WebSocket error:", err.message);
+  });
 });
