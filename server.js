@@ -3,8 +3,11 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Store all messages received from the WebSocket
+const allMessages = [];
+
 app.get('/', (req, res) => {
-  res.send('Narrative Analysis WebSocket client is running.');
+  res.json(allMessages);
 });
 
 app.listen(PORT, () => {
@@ -18,6 +21,8 @@ socket.on("open", () => {
 });
 
 socket.on("message", (raw) => {
+  // Store each message received
+  allMessages.push(raw.toString());
   const data = JSON.parse(raw);
   if (data.type === "token_update") {
     const token = data.data;
