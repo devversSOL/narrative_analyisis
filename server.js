@@ -20,7 +20,7 @@ app.get('/:tokenAddress', (req, res) => {
 app.listen(PORT, () => {
   console.log(`HTTP server listening on port ${PORT}`);
 });
-
+//redeploy
 const socket = new WebSocket("wss://lore-api.onrender.com/");
 
 socket.on("open", () => {
