@@ -10,6 +10,13 @@ app.get('/', (req, res) => {
   res.json(allMessages);
 });
 
+// Fetch all messages for a specific token address
+app.get('/:tokenAddress', (req, res) => {
+  const { tokenAddress } = req.params;
+  const filtered = allMessages.filter(msg => msg.address && msg.address.toLowerCase() === tokenAddress.toLowerCase());
+  res.json(filtered);
+});
+
 app.listen(PORT, () => {
   console.log(`HTTP server listening on port ${PORT}`);
 });
